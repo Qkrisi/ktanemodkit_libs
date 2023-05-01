@@ -1,0 +1,39 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+using System.Reflection;
+using System.Text;
+
+namespace Eltons.ReflectionKit
+{
+    public class ConstructorMethodSignature : MethodBaseSignature
+    {
+        public string Build(ConstructorInfo method, bool invokable, string @namespace = null)
+        {
+            var signatureBuilder = new StringBuilder();
+
+            // Add our method accessors if it's not invokable
+            if (!invokable)
+            {
+                signatureBuilder.Append(BuildAccessor(method));
+            }
+
+            // Add method name
+            signatureBuilder.Append(method.ReflectedType.IsGenericType
+                ? TypeSignature.RemoveGenericTypeNameArgumentCount(method.ReflectedType.Name)
+                : method.ReflectedType.Name);
+
+            // Add method generics
+            if (method.IsGenericMethod)
+            {
+                signatureBuilder.Append(BuildGenerics(method, @namespace));
+            }
+
+            // Add method parameters
+            signatureBuilder.Append(BuildArguments(method, invokable, false, @namespace));
+
+            return signatureBuilder.ToString();
+        }
+    }
+}

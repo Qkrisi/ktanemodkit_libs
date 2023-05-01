@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KtaneAssemblyExporter", "KtaneAssemblyExporter\KtaneAssemblyExporter.csproj", "{DC49ED28-F7B4-4909-9255-14644448FE05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KtaneModkitUtils", "KtaneModkitUtils\KtaneModkitUtils.csproj", "{E00CD749-4740-4A2F-82E8-57EEB977263A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DC49ED28-F7B4-4909-9255-14644448FE05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC49ED28-F7B4-4909-9255-14644448FE05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC49ED28-F7B4-4909-9255-14644448FE05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC49ED28-F7B4-4909-9255-14644448FE05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E00CD749-4740-4A2F-82E8-57EEB977263A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E00CD749-4740-4A2F-82E8-57EEB977263A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E00CD749-4740-4A2F-82E8-57EEB977263A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E00CD749-4740-4A2F-82E8-57EEB977263A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
