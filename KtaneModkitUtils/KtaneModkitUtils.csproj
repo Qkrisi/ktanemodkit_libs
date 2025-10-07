@@ -43,16 +43,16 @@
         <Reference Include="System.Data" />
         <Reference Include="System.Xml" />
         <Reference Include="UnityEditor">
-          <HintPath>..\..\..\..\..\UnityEditors\2017.4.22f1\Editor\Data\Managed\UnityEditor.dll</HintPath>
+          <HintPath>..\..\..\..\UnityEditors\2017.4.22f1\Editor\Data\Managed\UnityEditor.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine">
-          <HintPath>..\..\..\..\..\UnityEditors\2017.4.22f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
+          <HintPath>..\..\..\..\UnityEditors\2017.4.22f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.CoreModule">
-          <HintPath>..\..\..\..\..\UnityEditors\2017.4.22f1\Editor\Data\Managed\UnityEngine\UnityEngine.CoreModule.dll</HintPath>
+          <HintPath>..\..\..\..\UnityEditors\2017.4.22f1\Editor\Data\Managed\UnityEngine\UnityEngine.CoreModule.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.IMGUIModule">
-          <HintPath>..\..\..\..\..\UnityEditors\2017.4.22f1\Editor\Data\Managed\UnityEngine\UnityEngine.IMGUIModule.dll</HintPath>
+          <HintPath>..\..\..\..\UnityEditors\2017.4.22f1\Editor\Data\Managed\UnityEngine\UnityEngine.IMGUIModule.dll</HintPath>
         </Reference>
     </ItemGroup>
     <ItemGroup>

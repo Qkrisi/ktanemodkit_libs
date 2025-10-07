@@ -112,7 +112,7 @@ public class KtaneAssemblyImporterWindow : EditorWindow
                     "UnityExtensions/Unity/GUISystem/UnityEngine.UI"
                 }.Select(p => Path.Combine(EditorApplication.applicationContentsPath, p))
                 .Concat(gameLibraryReferences.Select(p => Path.ChangeExtension(p, null))).ToList();
-            var success = ModkitCompiler.CompileAssembly(scriptFiles, managedReferences.ToArray(), new string[0], output);
+            var success = ModkitCompiler.CompileAssembly(scriptFiles, managedReferences.ToArray(), new string[0], output, false);
             if (!success)
                 throw new ApplicationException("Failed to recompile Assembly-CSharp-firstpass");
             var firstpassLocation = Path.Combine(StripPath, "Assembly-CSharp-firstpass-forwarder.dll");
@@ -122,7 +122,7 @@ public class KtaneAssemblyImporterWindow : EditorWindow
             scriptFiles = Directory.GetFiles(Path.Combine(StripPath, "Assembly-CSharp"), "*.cs",
                 SearchOption.AllDirectories);
             output = Path.Combine(StripPath, "Assembly-CSharp.dll");
-            success = ModkitCompiler.CompileAssembly(scriptFiles, managedReferences.ToArray(), new string[0], output);
+            success = ModkitCompiler.CompileAssembly(scriptFiles, managedReferences.ToArray(), new string[0], output, false);
             if (!success)
                 throw new ApplicationException("Failed to recompile Assembly-CSharp");
             File.Copy(firstpassLocation,
