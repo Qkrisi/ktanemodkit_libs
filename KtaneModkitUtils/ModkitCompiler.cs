@@ -34,7 +34,10 @@ namespace ModkitEditorUtils
         private static readonly OpCode Ldarg_0;
         private static readonly OpCode Ldarg_1;
         private static readonly OpCode Ret;
-
+        
+        private static readonly MethodInfo simplifyMacrosMethod;
+        private static readonly MethodInfo optimizeMacrosMethod;
+        
         private static readonly Type ArrayTypeInternal;
         
         private static readonly ConstructorInfo AttributeUsageConstructor;
@@ -123,7 +126,6 @@ namespace ModkitEditorUtils
                 debugInfoType.Methods.Add(sourceDocumentsMethod);
                 debugInfoType.Methods.Add(debugLinesMethod);
                 debugInfoType.Methods.Add(debugLineMethod);
-                
                 var methods = new HashSet<MethodDefinition>(module.Types.SelectMany(GetTypeMethods));
                 var documentDict = new Dictionary<string, int>();
                 var debugLines = new HashSet<string>();
@@ -133,10 +135,11 @@ namespace ModkitEditorUtils
 
                     if (method.DeclaringType == debugInfoType || method.DeclaringType == debugLinesAttribute)
                         continue;
-
+                    
                     var processor = method.Body.GetILProcessor();
                     int offsetIndex = -1;
                     var methodDebugLines = new List<string>();
+                    simplifyMacrosMethod.Invoke(null, new object[] { method.Body });
                     foreach (var sp in method.DebugInformation.SequencePoints.Where(sp => !sp.IsHidden)
                                  .OrderBy(sp => sp.Offset))
                     {
@@ -165,10 +168,12 @@ namespace ModkitEditorUtils
                         methodDebugLines.Add(debugLine);
                         var moved = CloneInstruction(processor, instruction);
                         instruction.OpCode = Ldstr;
+
                         instruction.Operand = debugLine;
                         processor.InsertAfter(instruction, moved);
                         processor.InsertAfter(instruction, processor.Create(Call, debugLineMethod));
                     }
+                    optimizeMacrosMethod.Invoke(null, new object[] { method.Body });
                     
                     var attribute = new CustomAttribute(debugLinesAttributeConstructor);
                     attribute.ConstructorArguments.Add(new CustomAttributeArgument(stringArrayType,
@@ -335,6 +340,11 @@ namespace ModkitEditorUtils
 
             ArrayTypeInternal = typeof(OpCode).Assembly.GetType("Mono.Cecil.ArrayType");
             AttributeUsageConstructor = typeof(AttributeUsageAttribute).GetConstructor(new[] { typeof(AttributeTargets) });
+
+            var methodBodyRocksType =
+                typeof(Mono.Cecil.Rocks.ILParser).Assembly.GetType("Mono.Cecil.Rocks.MethodBodyRocks");
+            simplifyMacrosMethod = methodBodyRocksType.GetMethod("SimplifyMacros", BindingFlags.Static | BindingFlags.Public);
+            optimizeMacrosMethod = methodBodyRocksType.GetMethod("OptimizeMacros", BindingFlags.Static | BindingFlags.Public);
         }
     }
 }
