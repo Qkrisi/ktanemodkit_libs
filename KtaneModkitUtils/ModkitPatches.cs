@@ -15,6 +15,9 @@ public class ModkitPatches
     {
         if(arguments.Count >= 4 && arguments[3].StartsWith("-langversion:"))
             arguments[3] = "-langversion:6";
+        
+        if(AssetDatabase.IsValidFolder("Assets/Plugins/Managed/GameAssemblies"))
+            arguments.Add("-define:GAME_ASSEMBLIES");
     }
 
     private static IEnumerable<CodeInstruction> ReplaceProjectLangVersion(IEnumerable<CodeInstruction> instructions)

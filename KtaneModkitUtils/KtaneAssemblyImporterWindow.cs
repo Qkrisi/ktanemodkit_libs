@@ -149,6 +149,12 @@ public class KtaneAssemblyImporterWindow : EditorWindow
                 JsonConvert.SerializeObject(ProxyAssemblyDefinition, Formatting.Indented));
             progress = 0f;
             delta = 1f / ProxyInstance.ComponentTypes.Count;
+            File.WriteAllLines(Path.Combine(proxyLocation, "_ImportChecker.cs"), new[]
+            {
+                "#if !GAME_ASSEMBLIES",
+                "#error This project uses in-game types, but the game assemblies haven't been imported. Import them via the `Keep Talking ModKit > Import Assembly-CSharp` menu.",
+                "#endif"
+            });
             foreach (var fullTypeName in ProxyInstance.ComponentTypes)
             {
                 var splitted = fullTypeName.Split('.');
@@ -156,11 +162,13 @@ public class KtaneAssemblyImporterWindow : EditorWindow
                 EditorUtility.DisplayProgressBar("Generating proxy scripts (6/7)", typeName, progress);
                 File.WriteAllLines(Path.Combine(proxyLocation, typeName + "Proxy.cs"), new[]
                 {
+                    "#if GAME_ASSEMBLIES",
                     "#pragma warning disable 114",
                     $"[UnityEngine.AddComponentMenu(\"KTaNE/{typeName}\")]",
                     $"public class {typeName}Proxy : {fullTypeName}",
                     "{",
-                    "}"
+                    "}",
+                    "#endif"
                 }, Encoding.UTF8);
                 progress += delta;
             }
